@@ -1,6 +1,7 @@
 var request = require('request');
 var secret = require('./secrets');
 var fs = require('fs');
+var params = process.argv.slice(2);
 
 // console.log('Welcome to the GitHub Avatar Downloader!');
 //Go ahead and add an Authorization header to your request call in getRepoContributors.
@@ -20,13 +21,16 @@ function getRepoContributors(repoOwner, repoName, cb) {
   });
 }
 
-getRepoContributors("jquery", "jquery", function(err, result) {
-    // console.log("Errors:", err);
-    // console.log("Result:", result);
-    result.forEach(element => {
-        console.log(element.avatar_url);
-        downloadImageByURL(element.avatar_url, 'avatars/' + element.login)
-    });
+getRepoContributors(params[0],params[1], function(err, result) {
+    if (params.length == 2) {
+        result.forEach(element => {
+            console.log(element.avatar_url);
+            downloadImageByURL(element.avatar_url, 'avatars/' + element.login)
+        });
+    }
+    else {
+        console.log('Error: Please specify two arguments.');
+    }
   });
 // passing in avatar_url from your callback function into downloadImageByURL.
 
