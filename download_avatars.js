@@ -7,9 +7,10 @@ var secret = require('./secrets');
 function getRepoContributors(repoOwner, repoName, cb) {
   var options = {
     url: "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/contributors",
+    json: true,
     headers: {
       'User-Agent': 'request',
-      //'Authentication': secret.GITHUB_TOKEN
+      'Authentication': secret.GITHUB_TOKEN
     }
   };
 
@@ -19,8 +20,11 @@ function getRepoContributors(repoOwner, repoName, cb) {
 }
 
 getRepoContributors("jquery", "jquery", function(err, result) {
-    console.log("Errors:", err);
-    console.log("Result:", result);
+    // console.log("Errors:", err);
+    // console.log("Result:", result);
+    result.forEach(element => {
+        console.log(element.avatar_url)
+    });
   });
 
 
